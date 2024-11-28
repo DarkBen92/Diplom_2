@@ -1,6 +1,6 @@
 import allure
 
-from data import generate_random_string
+from helpers import generate_random_string
 
 
 @allure.step("Подготовка данных для пользователя")

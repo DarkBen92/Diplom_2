@@ -2,7 +2,7 @@ import allure
 
 from methods.auth_methods import AuthMethods
 from precondition.user_precondition import setup_data_user
-from data import delete_field
+from helpers import delete_field
 
 
 class TestCreateUser:

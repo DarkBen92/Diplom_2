@@ -2,9 +2,8 @@ import allure
 import pytest
 
 from methods.order_methods import OrderMethods
-from precondition.order_precondition import setup_ingredients, setup_random_hash_ingredient
 from conftest import create_and_token_user
-from data import EMPTY_TOKEN
+from data import EMPTY_TOKEN, payload_ingredients, payload_random_hash_ingredient
 
 
 class TestCreateOrder:
@@ -14,7 +13,7 @@ class TestCreateOrder:
         order = OrderMethods()
         response = order.create_order(
             headers=create_and_token_user[0],
-            params=setup_ingredients()
+            params=payload_ingredients
         )
         assert response.status_code == 200 and response.json()["success"] is True
 
@@ -23,7 +22,7 @@ class TestCreateOrder:
         order = OrderMethods()
         response = order.create_order(
             headers=EMPTY_TOKEN,
-            params=setup_ingredients()
+            params=payload_ingredients
         )
         assert response.status_code == 200 and response.json()["success"] is True
 
@@ -31,7 +30,7 @@ class TestCreateOrder:
     @pytest.mark.parametrize(
         "ingredients", [
             {"ingredients": []},
-            setup_random_hash_ingredient()
+            payload_random_hash_ingredient
         ]
     )
     def test_create_order_failed_ingredients(self, create_and_token_user, ingredients):
