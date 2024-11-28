@@ -3,7 +3,7 @@ import pytest
 
 from methods.order_methods import OrderMethods
 from conftest import create_and_token_user
-from data import EMPTY_TOKEN, payload_ingredients, payload_random_hash_ingredient
+from data import EMPTY_TOKEN, PAYLOAD_INGREDIENTS, PAYLOAD_RANDOM_HASH_INGREDIENT
 
 
 class TestCreateOrder:
@@ -13,7 +13,7 @@ class TestCreateOrder:
         order = OrderMethods()
         response = order.create_order(
             headers=create_and_token_user[0],
-            params=payload_ingredients
+            params=PAYLOAD_INGREDIENTS
         )
         assert response.status_code == 200 and response.json()["success"] is True
 
@@ -22,7 +22,7 @@ class TestCreateOrder:
         order = OrderMethods()
         response = order.create_order(
             headers=EMPTY_TOKEN,
-            params=payload_ingredients
+            params=PAYLOAD_INGREDIENTS
         )
         assert response.status_code == 200 and response.json()["success"] is True
 
@@ -30,7 +30,7 @@ class TestCreateOrder:
     @pytest.mark.parametrize(
         "ingredients", [
             {"ingredients": []},
-            payload_random_hash_ingredient
+            PAYLOAD_RANDOM_HASH_INGREDIENT
         ]
     )
     def test_create_order_failed_ingredients(self, create_and_token_user, ingredients):
