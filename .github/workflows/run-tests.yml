@@ -21,7 +21,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'  # Укажите нужную версию Python
+          python-version: '3.10'  # Укажите нужную версию Python
 
       # Установить зависимости
       - name: Install dependencies
@@ -29,7 +29,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-        # Кеширование
+      # Кеширование
       - name: Cache dependencies
         uses: actions/cache@v3
         with:
@@ -55,8 +55,9 @@ jobs:
           name: test-results
           path: allure_results
 
-
-      - name: Download artifacts
-        run: |
-          brew install allure
-          allure serve allure_reports/
+      - name: Publish test report
+        uses: simple-elf/allure-report-action@v1.7
+        if: always()
+        with:
+          allure_history: allure_history
+          allure_results: allure_results
