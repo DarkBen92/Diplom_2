@@ -23,7 +23,13 @@ jobs:
         with:
           python-version: '3.9'  # Укажите нужную версию Python
 
-      # Кеширование
+      # Установить зависимости
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+        # Кеширование
       - name: Cache dependencies
         uses: actions/cache@v3
         with:
@@ -31,12 +37,6 @@ jobs:
             key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
             restore-keys: |
               ${{ runner.os }}-pip-
-
-      # Установить зависимости
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
 
       # Установка allure
       - name: Install Allure
@@ -55,5 +55,8 @@ jobs:
           name: test-results
           path: allure_results
 
+
       - name: Download artifacts
-        run: allure serve allure_reports/
+        run: |
+          brew install allure
+          allure serve allure_reports/
