@@ -56,5 +56,4 @@ jobs:
           path: allure_results
 
       - name: Download artifacts
-        run: |
-          allure serve allure_reports/
+        run: allure serve allure_reports/
