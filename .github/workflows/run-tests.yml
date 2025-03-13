@@ -37,14 +37,14 @@ jobs:
       # Запустить тесты с генерацией отчета
       - name: Run tests
         run: |
-          pytest tests/ --junitxml=test-results.xml
+          pytest tests/ --alluredir=allure_results
 
       # Загрузить результаты тестов как артефакт
       - name: Upload test results
         uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: test-results.xml
+          path: allure_results
 
       - name: Download artifacts
         uses: actions/download-artifact@v4
