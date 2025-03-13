@@ -23,6 +23,15 @@ jobs:
         with:
           python-version: '3.9'  # Укажите нужную версию Python
 
+      # Кеширование
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+            path: ~/.cache/pip
+            key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+            restore-keys: |
+              ${{ runner.os }}-pip-
+
       # Установить зависимости
       - name: Install dependencies
         run: |
